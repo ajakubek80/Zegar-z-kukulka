@@ -1,0 +1,276 @@
+[
+    {
+        "id": "dae5e978.af9248",
+        "type": "time-range-switch",
+        "z": "b1f8b0b1.8198b",
+        "name": "",
+        "lat": "52.51493812209188",
+        "lon": "16.56733181324398",
+        "startTime": "16:00",
+        "endTime": "22:00",
+        "startOffset": 0,
+        "endOffset": 0,
+        "x": 300,
+        "y": 810,
+        "wires": [
+            [
+                "1179b77b.ac9bd9"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "1179b77b.ac9bd9",
+        "type": "function",
+        "z": "b1f8b0b1.8198b",
+        "name": "Czy pełna godzina",
+        "func": "var dzisiaj = new Date();\nmsg.minuty = dzisiaj.getMinutes();\nmsg.godzina = dzisiaj.getHours();\nmsg.godzina = msg.godzina % 12 || 12;\n\nif (msg.minuty==\"00\") {\n msg.pelna_godzina = true;\n return [ msg, null ];\n} else {\n msg.pelna_godzina = false;\n return [ null, msg ];\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 480,
+        "y": 810,
+        "wires": [
+            [
+                "3cf809ef.8b6c36"
+            ],
+            [
+                "98ca876a.fd93d8"
+            ]
+        ]
+    },
+    {
+        "id": "3cf809ef.8b6c36",
+        "type": "api-call-service",
+        "z": "b1f8b0b1.8198b",
+        "name": "Ustawienie głośności",
+        "server": "e623594f.2c1a08",
+        "version": 7,
+        "debugenabled": false,
+        "action": "media_player.volume_set",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "media_player.nest_hub"
+        ],
+        "labelId": [],
+        "data": "{\"volume_level\":\"0.25\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": false,
+        "domain": "media_player",
+        "service": "volume_set",
+        "x": 860,
+        "y": 780,
+        "wires": [
+            [
+                "6498ff81.efad7"
+            ]
+        ]
+    },
+    {
+        "id": "98ca876a.fd93d8",
+        "type": "api-call-service",
+        "z": "b1f8b0b1.8198b",
+        "name": "Ustawienie głośności",
+        "server": "e623594f.2c1a08",
+        "version": 7,
+        "debugenabled": false,
+        "action": "media_player.volume_set",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "media_player.nest_hub"
+        ],
+        "labelId": [],
+        "data": "{\"volume_level\":\"0.25\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": false,
+        "domain": "media_player",
+        "service": "volume_set",
+        "x": 860,
+        "y": 840,
+        "wires": [
+            [
+                "10f3e3da.32d61c"
+            ]
+        ]
+    },
+    {
+        "id": "6498ff81.efad7",
+        "type": "function",
+        "z": "b1f8b0b1.8198b",
+        "name": "O pełnej godzinie",
+        "func": "msg.payload =\n{\n    \"data\":\n    {\n        \"media_content_id\": \"/local/audio/kukulka/cuckoo-clock-\"+msg.godzina+\".wav\",\n        \"media_content_type\":\"music\",\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 780,
+        "wires": [
+            [
+                "56520645.1bee48"
+            ]
+        ]
+    },
+    {
+        "id": "10f3e3da.32d61c",
+        "type": "function",
+        "z": "b1f8b0b1.8198b",
+        "name": "30 minut po godzinie",
+        "func": "msg.payload =\n{\n    \"data\":\n    {\n        \"media_content_id\": \"/local/audio/kukulka/cuckoo-clock-1.wav\",\n        \"media_content_type\":\"music\",\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 840,
+        "wires": [
+            [
+                "d1be752e.6da968"
+            ]
+        ]
+    },
+    {
+        "id": "56520645.1bee48",
+        "type": "api-call-service",
+        "z": "b1f8b0b1.8198b",
+        "name": "Ramka",
+        "server": "e623594f.2c1a08",
+        "version": 7,
+        "debugenabled": false,
+        "action": "media_player.play_media",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "media_player.nest_hub"
+        ],
+        "labelId": [],
+        "data": "",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": false,
+        "domain": "media_player",
+        "service": "play_media",
+        "x": 1270,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d1be752e.6da968",
+        "type": "api-call-service",
+        "z": "b1f8b0b1.8198b",
+        "name": "Ramka",
+        "server": "e623594f.2c1a08",
+        "version": 7,
+        "debugenabled": false,
+        "action": "media_player.play_media",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "media_player.nest_hub"
+        ],
+        "labelId": [],
+        "data": "",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": false,
+        "domain": "media_player",
+        "service": "play_media",
+        "x": 1270,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bfac150f.238648",
+        "type": "comment",
+        "z": "b1f8b0b1.8198b",
+        "name": "Kukułka",
+        "info": "",
+        "x": 100,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "6b96c7d9.8a5818",
+        "type": "cronplus",
+        "z": "b1f8b0b1.8198b",
+        "name": "Co 30 minut",
+        "outputField": "payload",
+        "timeZone": "",
+        "storeName": "",
+        "commandResponseMsgOutput": "output1",
+        "defaultLocation": "",
+        "defaultLocationType": "default",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "Co 30 minut",
+                "payloadType": "default",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 */30 * * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 130,
+        "y": 830,
+        "wires": [
+            [
+                "dae5e978.af9248"
+            ]
+        ]
+    },
+    {
+        "id": "e623594f.2c1a08",
+        "type": "server",
+        "name": "HA AJ",
+        "version": 5,
+        "addon": true,
+        "rejectUnauthorizedCerts": true,
+        "ha_boolean": "y|yes|true|on|home|open",
+        "connectionDelay": true,
+        "cacheJson": false,
+        "heartbeat": true,
+        "heartbeatInterval": "30",
+        "areaSelector": "friendlyName",
+        "deviceSelector": "friendlyName",
+        "entitySelector": "friendlyName",
+        "statusSeparator": " - ",
+        "statusYear": "hidden",
+        "statusMonth": "short",
+        "statusDay": "numeric",
+        "statusHourCycle": "h23",
+        "statusTimeFormat": "h:m:s",
+        "enableGlobalContextStore": true
+    }
+]
